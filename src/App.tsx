@@ -1,9 +1,13 @@
-function App() {
+import {useState} from "react"
+import ITask from "./components/interfaces/ITask"
+import Status from "./components/Status"
+const App = () => {
+  const [tasks, setTasks] = useState<ITask[]>([])
   return (
     <>
-      <p>test</p>
+      <Status tasks={tasks} setTasks={setTasks}/>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
