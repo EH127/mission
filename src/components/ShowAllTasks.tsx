@@ -2,7 +2,7 @@ import { useState } from "react";
 import ITaskProps from "./interfaces/ITaskProps";
 
 const ShowAllTasks = (props: ITaskProps) => {
-  const [selectedValue, setSelectedValue] = useState<number>();
+  const [selectedValue, setSelectedValue] = useState(0);
   const { tasks, setTasks } = props;
 
   const handleChange = (event: any, index: number) => {
@@ -12,7 +12,7 @@ const ShowAllTasks = (props: ITaskProps) => {
     newTasks.map((task) => {
       return (task.label = task.label.filter((label) => label !== "INIT"));
     });
-    
+
     newTasks[index].label = [...newTasks[index].label, "INIT"];
     setTasks(newTasks);
   };
@@ -29,7 +29,7 @@ const ShowAllTasks = (props: ITaskProps) => {
               checked={selectedValue === index}
               onChange={(e) => handleChange(e, index)}
             />
-            {task.name}{" "}
+            {task.name}
             {task.label.map((label, index) => {
               return <span key={index}>[{label}]</span>;
             })}

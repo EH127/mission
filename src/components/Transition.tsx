@@ -1,38 +1,23 @@
+import { useState } from "react";
+import AddTransition from "./AddTransition";
 import ITaskProps from "./interfaces/ITaskProps";
+import ITransition from "./interfaces/ITransition";
+import ShowAllTransitions from "./ShowAllTransitions";
+
+
 const Transition = (props: ITaskProps) => {
+  
+  const [transition, setTransition] = useState<ITransition[]>([]);
   const { setTasks, tasks } = props;
+
+
+
   return (
-    <form>
-      <label>
-        <span>name: </span>
-        <input
-          type="text"
-          name="name"
-          //onChange={(text) => setTaskName(text.target.value)}
-        />
-      </label>
-      <label htmlFor="select">from: </label>
-      <select name="select" id="select">
-        {tasks.map((task, i) => {
-          return (
-            <option value={task.name} key={i}>
-              {task.name}
-            </option>
-          );
-        })}
-      </select>
-      <span>to: </span>
-      <select name="select" id="select">
-        {tasks.map((task, i) => {
-          return (
-            <option value={task.name} key={i}>
-              {task.name}
-            </option>
-          );
-        })}
-      </select>
-      <input type="submit" value="Add" />
-    </form>
+    <>
+      <h3>Add transition</h3>
+      <AddTransition setTransition={setTransition} tasks={tasks} transition={transition} />
+      <ShowAllTransitions transition={transition}/>
+    </>
   );
 };
 
