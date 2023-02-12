@@ -7,11 +7,17 @@ const AddTransition = (props: ITransitionProps) => {
   const [to, setTo] = useState("");
 
   const { setTransition, transition, tasks } = props;
+
   const submit = (event: any) => {
     event.preventDefault();
+
+    if (transition.find((transition) => transition.name === name)) {
+      return;
+    }
     setTransition &&
       setTransition([...transition, { from: from, to: to, name: name }]);
   };
+
   return (
     <form onSubmit={submit}>
       <label>

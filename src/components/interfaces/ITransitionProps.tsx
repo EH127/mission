@@ -5,4 +5,5 @@ export default interface ITransitionProps {
   setTransition?: Function;
   transition: ITransition[];
   tasks?: ITask[];
+  setTasks?: Function;
 }
