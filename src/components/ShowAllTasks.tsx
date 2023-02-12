@@ -10,10 +10,10 @@ const ShowAllTasks = (props: ITaskProps) => {
 
     var newTasks = tasks;
     newTasks.map((task) => {
-      return (task.label = task.label.filter((label) => label !== "init"));
+      return (task.label = task.label.filter((label) => label !== "INIT"));
     });
-
-    newTasks[index].label = [...newTasks[index].label, "init"];
+    
+    newTasks[index].label = [...newTasks[index].label, "INIT"];
     setTasks(newTasks);
   };
 
@@ -29,7 +29,10 @@ const ShowAllTasks = (props: ITaskProps) => {
               checked={selectedValue === index}
               onChange={(e) => handleChange(e, index)}
             />
-            {task.name} [{task.label.toString()}]
+            {task.name}{" "}
+            {task.label.map((label, index) => {
+              return <span key={index}>[{label}]</span>;
+            })}
           </li>
         );
       })}

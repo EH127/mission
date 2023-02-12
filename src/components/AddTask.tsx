@@ -17,13 +17,14 @@ const AddTask = (props: ITaskProps) => {
   return (
     <form onSubmit={addTask}>
       <label>
+        <span>name: </span>
         <input
           type="text"
           name="name"
           onChange={(text) => setTaskName(text.target.value)}
         />
       </label>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Add" />
     </form>
   );
 };
