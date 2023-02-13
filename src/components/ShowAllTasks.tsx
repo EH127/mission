@@ -10,10 +10,10 @@ const ShowAllTasks = (props: ITaskProps) => {
 
     let newTasks = tasks;
     newTasks.map((task) => {
-      return (task.label = task.label.filter((label) => label !== "INIT"));
+      return (task.isInitial = false);
     });
 
-    newTasks[index].label = [...newTasks[index].label, "INIT"];
+    newTasks[index].isInitial = true;
     setTasks(newTasks);
   };
 
@@ -35,13 +35,10 @@ const ShowAllTasks = (props: ITaskProps) => {
               checked={selectedValue === index}
               onChange={(_e) => handleChange(index)}
             />
-            {task.name}
-            {task.label.map((label, index) => {
-              return <span key={index}>[{label}]</span>;
-            })}
-            <button onClick={() => onDelete(task.name)}>
-              delete
-            </button>
+            {task.name} {task.isOrphan && <span>[ORPHAN]</span>}{" "}
+            {task.isFinal && <span>[FINAL]</span>}{" "}
+            {task.isInitial && <span>[INIT]</span>}
+            <button onClick={() => onDelete(task.name)}>delete</button>
           </li>
         );
       })}

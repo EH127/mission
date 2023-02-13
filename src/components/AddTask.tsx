@@ -14,7 +14,18 @@ const AddTask = (props: ITaskProps) => {
     ) {
       return;
     }
-    setTasks([...tasks, { name: taskName, label: [] }]);
+    setTasks([
+      ...tasks,
+      {
+        name: taskName,
+        label: [],
+        isFinal: false,
+        isSelectedFrom: false,
+        isSelectedTo: false,
+        isInitial: tasks.length === 0,
+        isOrphan: true,
+      },
+    ]);
   };
 
   return (

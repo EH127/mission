@@ -1,4 +1,8 @@
 export default interface ITask {
   name: string;
-  label: string[];
+  isSelectedFrom: boolean;
+  isSelectedTo: boolean;
+  isInitial: boolean;
+  isFinal: boolean;
+  isOrphan: boolean;
 }

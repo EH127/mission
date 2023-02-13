@@ -8,6 +8,24 @@ const AddTransition = (props: ITransitionProps) => {
 
   const { setTransition, transition, tasks } = props;
 
+  const onSelectFrom = (name: string) => {
+    setFrom(name);
+    tasks?.forEach((task) => {
+      if (task.name === name) task.isSelectedFrom = true;
+      else if (task.name !== name || name === "blank")
+        task.isSelectedFrom = false;
+    });
+  };
+
+  const onSelectTo = (name: string) => {
+    setTo(name);
+    tasks?.forEach((task) => {
+      if (task.name === name) task.isSelectedTo = true;
+      else if (task.name !== name || name === "blank")
+        task.isSelectedTo = false;
+    });
+  };
+
   const submit = (event: any) => {
     event.preventDefault();
     if (
@@ -34,14 +52,16 @@ const AddTransition = (props: ITransitionProps) => {
       <select
         name="select"
         id="select"
-        onChange={(val) => setFrom(val.target.value)}
+        onChange={(val) => onSelectFrom(val.target.value)}
       >
         <option value="blank"></option>
         {tasks?.map((task, i) => {
           return (
-            <option value={task.name} key={i}>
-              {task.name}
-            </option>
+            !task.isSelectedTo && (
+              <option value={task.name} key={i}>
+                {task.name}
+              </option>
+            )
           );
         })}
       </select>
@@ -49,14 +69,16 @@ const AddTransition = (props: ITransitionProps) => {
       <select
         name="select"
         id="select"
-        onChange={(val) => setTo(val.target.value)}
+        onChange={(val) => onSelectTo(val.target.value)}
       >
         <option value="blank"></option>
         {tasks?.map((task, i) => {
           return (
-            <option value={task.name} key={i}>
-              {task.name}
-            </option>
+            !task.isSelectedFrom && (
+              <option value={task.name} key={i}>
+                {task.name}
+              </option>
+            )
           );
         })}
       </select>
