@@ -2,20 +2,22 @@ import { useState } from "react";
 import ITransitionProps from "./interfaces/ITransitionProps";
 
 const AddTransition = (props: ITransitionProps) => {
-  const [name, setName] = useState("");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [name, setName] = useState<string>();
+  const [from, setFrom] = useState<string>();
+  const [to, setTo] = useState<string>();
 
   const { setTransition, transition, tasks } = props;
 
   const submit = (event: any) => {
     event.preventDefault();
-
-    if (transition.find((transition) => transition.name === name)) {
+    if (
+      transition.find((transition) => transition.name === name) ||
+      (name && name.trimEnd().length === 0) ||
+      !name
+    ) {
       return;
     }
-    setTransition &&
-      setTransition([...transition, { from: from, to: to, name: name }]);
+    setTransition([...transition, { from: from, to: to, name: name }]);
   };
 
   return (

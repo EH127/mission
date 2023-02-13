@@ -5,11 +5,11 @@ import Transition from "./components/Transition";
 const App = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   return (
-    <>
+    <div>
       <h1>Build a workflow</h1>
       <Status tasks={tasks} setTasks={setTasks} />
       <Transition tasks={tasks} setTasks={setTasks} />
-    </>
+    </div>
   );
 };
 

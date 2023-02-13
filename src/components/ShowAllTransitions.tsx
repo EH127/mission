@@ -1,18 +1,30 @@
 import ITransitionProps from "./interfaces/ITransitionProps";
 
 const ShowAllTransitions = (props: ITransitionProps) => {
-  const { transition } = props;
+  const { transition, setTransition } = props;
+
+  const onDelete = (name: string) => {
+    let newTransition = transition;
+    newTransition = newTransition.filter(
+      (transition) => transition.name !== name
+    );
+    setTransition(newTransition);
+  };
+
   return (
-    <>
+    <div>
       {transition.map((transition, i) => {
         const { from, name, to } = transition;
         return (
-          <span key={i}>
-            {name}: {from} -&gt; {to}
-          </span>
+          <div key={i}>
+            <span>
+              {name}: {from} -&gt; {to}
+            </span>
+            <button onClick={() => onDelete(name)} >delete </button>
+          </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

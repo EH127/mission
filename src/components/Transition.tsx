@@ -9,7 +9,7 @@ const Transition = (props: ITaskProps) => {
   const { setTasks, tasks } = props;
 
   return (
-    <>
+    <div>
       <h3>Add transition</h3>
       <AddTransition
         setTransition={setTransition}
@@ -17,8 +17,8 @@ const Transition = (props: ITaskProps) => {
         transition={transition}
         setTasks={setTasks}
       />
-      <ShowAllTransitions transition={transition} />
-    </>
+      <ShowAllTransitions transition={transition} setTransition={setTransition} />
+    </div>
   );
 };
 

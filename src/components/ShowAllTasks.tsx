@@ -5,15 +5,21 @@ const ShowAllTasks = (props: ITaskProps) => {
   const [selectedValue, setSelectedValue] = useState(0);
   const { tasks, setTasks } = props;
 
-  const handleChange = (event: any, index: number) => {
-    setSelectedValue(event.target.value);
+  const handleChange = (index: number) => {
+    setSelectedValue(index);
 
-    var newTasks = tasks;
+    let newTasks = tasks;
     newTasks.map((task) => {
       return (task.label = task.label.filter((label) => label !== "INIT"));
     });
 
     newTasks[index].label = [...newTasks[index].label, "INIT"];
+    setTasks(newTasks);
+  };
+
+  const onDelete = (name: string) => {
+    let newTasks = tasks;
+    newTasks = newTasks.filter((task) => task.name !== name);
     setTasks(newTasks);
   };
 
@@ -24,15 +30,18 @@ const ShowAllTasks = (props: ITaskProps) => {
           <li key={index}>
             <input
               type="radio"
-              name="radio-group"
+              name="tasks"
               value={index}
               checked={selectedValue === index}
-              onChange={(e) => handleChange(e, index)}
+              onChange={(_e) => handleChange(index)}
             />
             {task.name}
             {task.label.map((label, index) => {
               return <span key={index}>[{label}]</span>;
             })}
+            <button onClick={() => onDelete(task.name)}>
+              delete
+            </button>
           </li>
         );
       })}

@@ -2,16 +2,19 @@ import { useState } from "react";
 import ITaskProps from "./interfaces/ITaskProps";
 
 const AddTask = (props: ITaskProps) => {
-  const [taskName, setTaskName] = useState("");
+  const [taskName, setTaskName] = useState<string>();
   const { setTasks, tasks } = props;
-
 
   const addTask = (event: any) => {
     event.preventDefault();
-    if (tasks.find((task) => task.name === taskName)) {
+    if (
+      tasks.find((task) => task.name === taskName) ||
+      (taskName && taskName.trimEnd().length === 0) ||
+      !taskName
+    ) {
       return;
     }
-    setTasks([...tasks, { name: taskName, label: ["ORPHAN"] }]);
+    setTasks([...tasks, { name: taskName, label: [] }]);
   };
 
   return (
