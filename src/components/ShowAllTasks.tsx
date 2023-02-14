@@ -9,15 +9,21 @@ const ShowAllTasks = (props: ITaskProps) => {
 
   useEffect(() => {
     if (reload === true) {
-      setTasks((prevTasks: ITask[]) => {
-        let newTasks = prevTasks.map((task) => {
-          const [isOrphanTask, isFinalTask] = isTask(task, tasks);
-          task.isFinal = isFinalTask;
-          task.isOrphan = !isOrphanTask;
-          return task;
+      fetch("http://192.168.50.10:3001/api/tasks")
+        .then((res) => res.json())
+        .then((data: ITask[]) => {
+          setTasks(data);
         });
-        return newTasks;
-      });
+
+      // setTasks((prevTasks: ITask[]) => {
+      //   let newTasks = prevTasks.map((task) => {
+      //     const [isOrphanTask, isFinalTask] = isTask(task, tasks);
+      //     task.isFinal = isFinalTask;
+      //     task.isOrphan = !isOrphanTask;
+      //     return task;
+      //   });
+      //   return newTasks;
+      // });
     }
     setReload && setReload(false);
   }, [reload, setReload, setTasks, tasks]);
@@ -55,45 +61,69 @@ const ShowAllTasks = (props: ITaskProps) => {
   const handleChange = (index: number) => {
     setSelectedValue(index);
 
-    let newTasks = tasks;
-    newTasks.map((task) => {
-      return (task.isInitial = false);
+    fetch(`http://192.168.50.10:3001/api/tasks/${index}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        isInitial: true,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        fetch("http://192.168.50.10:3001/api/tasks")
+          .then((res) => res.json())
+          .then((data: ITask[]) => {
+            setTasks(data);
+          });
+      }
     });
 
-    newTasks[index].isInitial = true;
-    setTasks(newTasks);
-    setReload && setReload(true);
+    // setTasks(newTasks);
+    // setReload && setReload(true);
   };
 
   const onDelete = (name: string) => {
-    let newTasks = tasks;
-    newTasks = newTasks.filter((task) => task.name !== name);
-    transition.map((transition) => {
-      if (transition.to === name) {
-        newTasks.map((task) => {
-          if (task.isSelectedFrom && task.name === transition.from) {
-            task.isSelectedFrom = false;
-          }
-          return task;
-        });
-      } else if (transition.from === name) {
-        newTasks.map((task) => {
-          if (task.isSelectedTo && task.name === transition.from) {
-            task.isSelectedTo = false;
-          }
-          return task;
-        });
-      }
-      return newTasks;
-    });
-
-    let newTransition = transition;
-    newTransition = newTransition.filter(
-      (transition) => !(transition.from === name || transition.to === name)
-    );
-    setTasks(newTasks);
-    setTransition && setTransition(newTransition);
-    setReload && setReload(true);
+    fetch(`http://192.168.50.10:3001/api/tasks/${name}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          fetch("http://192.168.50.10:3001/api/tasks")
+            .then((res) => res.json())
+            .then((data) => setTasks(data));
+        } else {
+          console.error("Error deleting task:", response.status);
+        }
+      })
+      .catch((error) => console.log(error));
+    // let newTasks = tasks;
+    // newTasks = newTasks.filter((task) => task.name !== name);
+    // transition.map((transition) => {
+    //   if (transition.to === name) {
+    //     newTasks.map((task) => {
+    //       if (task.isSelectedFrom && task.name === transition.from) {
+    //         task.isSelectedFrom = false;
+    //       }
+    //       return task;
+    //     });
+    //   } else if (transition.from === name) {
+    //     newTasks.map((task) => {
+    //       if (task.isSelectedTo && task.name === transition.from) {
+    //         task.isSelectedTo = false;
+    //       }
+    //       return task;
+    //     });
+    //   }
+    //   return newTasks;
+    // });
+    //   let newTransition = transition;
+    //   newTransition = newTransition.filter(
+    //     (transition) => !(transition.from === name || transition.to === name)
+    //   );
+    //   setTasks(newTasks);
+    //   setTransition && setTransition(newTransition);
+    //   setReload && setReload(true);
   };
 
   return (

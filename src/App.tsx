@@ -3,6 +3,7 @@ import ITask from "./components/interfaces/ITask";
 import ITransition from "./components/interfaces/ITransition";
 import Status from "./components/Status";
 import Transition from "./components/Transition";
+
 const App = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [transition, setTransition] = useState<ITransition[]>([]);
@@ -14,6 +15,7 @@ const App = () => {
     setTransition([]);
     setReload(true);
   };
+
   return (
     <div>
       <h1 className="title">Build a workflow</h1>

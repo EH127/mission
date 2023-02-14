@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ITask from "./interfaces/ITask";
 import ITaskProps from "./interfaces/ITaskProps";
 
 const AddTask = (props: ITaskProps) => {
@@ -14,17 +15,24 @@ const AddTask = (props: ITaskProps) => {
     ) {
       return;
     }
-    setTasks([
-      ...tasks,
-      {
+
+    fetch("http://192.168.50.10:3001/api/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         name: taskName,
         isFinal: true,
         isSelectedFrom: false,
         isSelectedTo: false,
         isInitial: tasks.length === 0,
         isOrphan: !(tasks.length === 0),
-      },
-    ]);
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => setTasks((prev: ITask[]) => [...prev, data]))
+      .catch((error) => console.error(error));
     setTaskName("");
   };
 
