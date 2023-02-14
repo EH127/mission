@@ -24,14 +24,19 @@ const AddTransition = (props: ITransitionProps) => {
 
   const submit = (event: any) => {
     event.preventDefault();
-    if (
-      transition.find((transition) => transition.name === name) ||
-      (name && name.trimEnd().length === 0) ||
-      !name
-    ) {
-      return;
-    }
-    setTransition([...transition, { from: from, to: to, name: name }]);
+    fetch(`http://192.168.50.10:3001/api/transitions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        from: from,
+        to: to,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setTransition(data));
     setName("");
     setFrom("");
     setTo("");

@@ -22,6 +22,7 @@ const Transition = (props: ITransitionProps) => {
         setTransition={setTransition}
         tasks={tasks}
         setTasks={setTasks}
+        setReload={setReload}
       />
     </div>
   );

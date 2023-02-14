@@ -9,54 +9,13 @@ const ShowAllTasks = (props: ITaskProps) => {
 
   useEffect(() => {
     if (reload === true) {
-      fetch("http://192.168.50.10:3001/api/tasks")
+      fetch('http://192.168.50.10:3001/api/tasks/updateall')
         .then((res) => res.json())
-        .then((data: ITask[]) => {
-          setTasks(data);
-        });
-
-      // setTasks((prevTasks: ITask[]) => {
-      //   let newTasks = prevTasks.map((task) => {
-      //     const [isOrphanTask, isFinalTask] = isTask(task, tasks);
-      //     task.isFinal = isFinalTask;
-      //     task.isOrphan = !isOrphanTask;
-      //     return task;
-      //   });
-      //   return newTasks;
-      // });
+        .then((data: ITask[]) => setTasks(data))
+        .catch((error) => console.log(error));
     }
     setReload && setReload(false);
   }, [reload, setReload, setTasks, tasks]);
-
-  const isTask = (task: ITask, tasks: ITask[]) => {
-    const initName = tasks.find((task) => task.isInitial === true)?.name;
-    const taskDependencies = new Map();
-    let isOrphanTask = false;
-    let isFinalTask = false;
-
-    let isAfterInit = false;
-    if (initName === task.name) isOrphanTask = true;
-    else {
-      transition.forEach(({ from, to }) => {
-        if (isAfterInit || from === initName) {
-          if (from) {
-            taskDependencies.set(from, []);
-          }
-          taskDependencies.get(from).push(to);
-          if (to) {
-            if (!taskDependencies.has(to)) {
-              taskDependencies.set(to, []);
-            }
-          }
-          isAfterInit = true;
-        }
-      });
-      if (taskDependencies.has(task.name)) isOrphanTask = true;
-    }
-
-    if (task.isSelectedFrom === false) isFinalTask = true;
-    return [isOrphanTask, isFinalTask];
-  };
 
   const handleChange = (index: number) => {
     setSelectedValue(index);
@@ -69,33 +28,19 @@ const ShowAllTasks = (props: ITaskProps) => {
       body: JSON.stringify({
         isInitial: true,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        fetch("http://192.168.50.10:3001/api/tasks")
-          .then((res) => res.json())
-          .then((data: ITask[]) => {
-            setTasks(data);
-          });
-      }
-    });
-
-    // setTasks(newTasks);
-    // setReload && setReload(true);
+    })
+      .then((res) => res.json())
+      .then((data: ITask[]) => setTasks(data))
+      .catch((error) => console.log(error));
+    setReload && setReload(true);
   };
 
   const onDelete = (name: string) => {
     fetch(`http://192.168.50.10:3001/api/tasks/${name}`, {
       method: "DELETE",
     })
-      .then((response) => {
-        if (response.ok) {
-          fetch("http://192.168.50.10:3001/api/tasks")
-            .then((res) => res.json())
-            .then((data) => setTasks(data));
-        } else {
-          console.error("Error deleting task:", response.status);
-        }
-      })
+      .then((res) => res.json())
+      .then((data: ITask[]) => setTasks(data))
       .catch((error) => console.log(error));
     // let newTasks = tasks;
     // newTasks = newTasks.filter((task) => task.name !== name);

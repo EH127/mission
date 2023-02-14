@@ -31,7 +31,7 @@ const AddTask = (props: ITaskProps) => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => setTasks((prev: ITask[]) => [...prev, data]))
+      .then((data: ITask) => setTasks(data))
       .catch((error) => console.error(error));
     setTaskName("");
   };

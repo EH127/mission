@@ -1,16 +1,25 @@
+import { useEffect } from "react";
+import ITransition from "./interfaces/ITransition";
 import ITransitionProps from "./interfaces/ITransitionProps";
 
 const ShowAllTransitions = (props: ITransitionProps) => {
-  const { transition, setTransition} = props;
+  const { transition, setTransition, setReload } = props;
+
+  useEffect(() => {
+    fetch("http://192.168.50.10:3001/api/transitions")
+      .then((res) => res.json())
+      .then((data: ITransition[]) => setTransition(data))
+      .catch((error) => console.log(error));
+  }, []);
 
   const onDelete = (name: string) => {
-    let newTransition = transition;
-    
-    newTransition = newTransition.filter(
-      (transition) => transition.name !== name
-    );
-
-    setTransition(newTransition);
+    fetch(`http://192.168.50.10:3001/api/transitions/${name}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data: ITransition[]) => setTransition(data))
+      .catch((error) => console.log(error));
+    setReload && setReload(true);
   };
 
   return (
