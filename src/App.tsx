@@ -16,24 +16,26 @@ const App = () => {
   };
   return (
     <div>
-      <h1>Build a workflow</h1>
-      <Status
-        tasks={tasks}
-        setTasks={setTasks}
-        transition={transition}
-        setTransition={setTransition}
-        reload={reload}
-        setReload={setReload}
-      />
-      <Transition
-        tasks={tasks}
-        setTasks={setTasks}
-        setTransition={setTransition}
-        transition={transition}
-        reload={reload}
-        setReload={setReload}
-      />
-      <button onClick={onClick}>reset</button>
+      <h1 className="title">Build a workflow</h1>
+      <div className="bodyBox">
+        <Status
+          tasks={tasks}
+          setTasks={setTasks}
+          transition={transition}
+          setTransition={setTransition}
+          reload={reload}
+          setReload={setReload}
+        />
+        <Transition
+          tasks={tasks}
+          setTasks={setTasks}
+          setTransition={setTransition}
+          transition={transition}
+          reload={reload}
+          setReload={setReload}
+        />
+      </div>
+      <button onClick={onClick} className="big-red-button">reset</button>
     </div>
   );
 };

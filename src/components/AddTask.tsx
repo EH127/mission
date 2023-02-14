@@ -31,7 +31,6 @@ const AddTask = (props: ITaskProps) => {
   return (
     <form onSubmit={addTask}>
       <label>
-        <span>name: </span>
         <input
           type="text"
           name="name"

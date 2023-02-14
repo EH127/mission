@@ -7,7 +7,7 @@ const Transition = (props: ITransitionProps) => {
     props;
 
   return (
-    <div>
+    <div className="addClass">
       <h3>Add transition</h3>
       <AddTransition
         setTransition={setTransition}

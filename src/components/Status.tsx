@@ -6,7 +6,7 @@ const Status = (props: ITaskProps) => {
   const { tasks, setTasks, transition, setTransition, reload, setReload } =
     props;
   return (
-    <div>
+    <div className="addClass">
       <h3>Add status</h3>
       <AddTask
         setTasks={setTasks}
