@@ -18,14 +18,14 @@ const AddTask = (props: ITaskProps) => {
       ...tasks,
       {
         name: taskName,
-        label: [],
-        isFinal: false,
+        isFinal: true,
         isSelectedFrom: false,
         isSelectedTo: false,
         isInitial: tasks.length === 0,
-        isOrphan: true,
+        isOrphan: !(tasks.length === 0),
       },
     ]);
+    setTaskName("");
   };
 
   return (
@@ -35,6 +35,7 @@ const AddTask = (props: ITaskProps) => {
         <input
           type="text"
           name="name"
+          value={taskName}
           onChange={(text) => setTaskName(text.target.value)}
         />
       </label>

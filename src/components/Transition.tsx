@@ -1,12 +1,10 @@
-import { useState } from "react";
 import AddTransition from "./AddTransition";
-import ITaskProps from "./interfaces/ITaskProps";
-import ITransition from "./interfaces/ITransition";
+import ITransitionProps from "./interfaces/ITransitionProps";
 import ShowAllTransitions from "./ShowAllTransitions";
 
-const Transition = (props: ITaskProps) => {
-  const [transition, setTransition] = useState<ITransition[]>([]);
-  const { setTasks, tasks } = props;
+const Transition = (props: ITransitionProps) => {
+  const { setTasks, tasks, setTransition, transition, reload, setReload } =
+    props;
 
   return (
     <div>
@@ -16,8 +14,15 @@ const Transition = (props: ITaskProps) => {
         tasks={tasks}
         transition={transition}
         setTasks={setTasks}
+        reload={reload}
+        setReload={setReload}
       />
-      <ShowAllTransitions transition={transition} setTransition={setTransition} />
+      <ShowAllTransitions
+        transition={transition}
+        setTransition={setTransition}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
     </div>
   );
 };

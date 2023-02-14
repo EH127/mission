@@ -1,13 +1,15 @@
 import ITransitionProps from "./interfaces/ITransitionProps";
 
 const ShowAllTransitions = (props: ITransitionProps) => {
-  const { transition, setTransition } = props;
+  const { transition, setTransition} = props;
 
   const onDelete = (name: string) => {
     let newTransition = transition;
+    
     newTransition = newTransition.filter(
       (transition) => transition.name !== name
     );
+
     setTransition(newTransition);
   };
 
@@ -20,7 +22,7 @@ const ShowAllTransitions = (props: ITransitionProps) => {
             <span>
               {name}: {from} -&gt; {to}
             </span>
-            <button onClick={() => onDelete(name)} >delete </button>
+            <button onClick={() => onDelete(name)}> delete </button>
           </div>
         );
       })}
