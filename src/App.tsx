@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ITask from "./components/interfaces/ITask";
 import ITransition from "./components/interfaces/ITransition";
 import Status from "./components/Status";
@@ -6,13 +6,25 @@ import Transition from "./components/Transition";
 
 const App = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [transition, setTransition] = useState<ITransition[]>([]);
+  const [transitions, setTransitions] = useState<ITransition[]>([]);
   const [reload, setReload] = useState(true);
+
+  useEffect(() => {
+    if (reload) {
+      fetch("http://192.168.50.10:3001/api/tasks")
+        .then((res) => res.json())
+        .then((data) => setTasks(data));
+
+      fetch("http://192.168.50.10:3001/api/transitions")
+        .then((res) => res.json())
+        .then((data) => setTransitions(data))
+        .finally(() => setReload(false));
+    }
+  }, [reload]);
 
   const onClick = (event: any) => {
     event.preventDefault();
-    setTasks([]);
-    setTransition([]);
+    fetch("http://192.168.50.10:3001/api/reset")
     setReload(true);
   };
 
@@ -23,21 +35,23 @@ const App = () => {
         <Status
           tasks={tasks}
           setTasks={setTasks}
-          transition={transition}
-          setTransition={setTransition}
+          transition={transitions}
+          setTransition={setTransitions}
           reload={reload}
           setReload={setReload}
         />
         <Transition
           tasks={tasks}
           setTasks={setTasks}
-          setTransition={setTransition}
-          transition={transition}
+          setTransition={setTransitions}
+          transition={transitions}
           reload={reload}
           setReload={setReload}
         />
       </div>
-      <button onClick={onClick} className="big-red-button">reset</button>
+      <button onClick={onClick} className="big-red-button">
+        reset
+      </button>
     </div>
   );
 };

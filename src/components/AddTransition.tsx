@@ -6,7 +6,7 @@ const AddTransition = (props: ITransitionProps) => {
   const [from, setFrom] = useState<string>();
   const [to, setTo] = useState<string>();
 
-  const { setTransition, transition, tasks, setReload } = props;
+  const { setTransition, tasks, setReload } = props;
 
   const onSelectFrom = (name: string) => {
     setFrom(name);
@@ -36,11 +36,11 @@ const AddTransition = (props: ITransitionProps) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => setTransition(data));
+      .then((data) => setTransition(data))
+      .finally(() => setReload && setReload(true));
     setName("");
     setFrom("");
     setTo("");
-    setReload && setReload(true);
   };
 
   return (

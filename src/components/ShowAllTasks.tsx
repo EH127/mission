@@ -4,21 +4,33 @@ import ITaskProps from "./interfaces/ITaskProps";
 
 const ShowAllTasks = (props: ITaskProps) => {
   const [selectedValue, setSelectedValue] = useState<number>(0);
-  const { tasks, setTasks, transition, setTransition, reload, setReload } =
-    props;
+  const { tasks, setTasks, reload, setReload } = props;
 
   useEffect(() => {
     if (reload === true) {
-      fetch('http://192.168.50.10:3001/api/tasks/updateall')
+      fetch("http://192.168.50.10:3001/api/select")
         .then((res) => res.json())
-        .then((data: ITask[]) => setTasks(data))
-        .catch((error) => console.log(error));
+        .then((data) => {
+          setSelectedValue(data.select);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setReload && setReload(false));
     }
-    setReload && setReload(false);
-  }, [reload, setReload, setTasks, tasks]);
+  }, [reload]);
 
   const handleChange = (index: number) => {
-    setSelectedValue(index);
+    fetch("http://192.168.50.10:3001/api/select", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        select: index,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setSelectedValue(data.select))
+      .catch((error) => console.log(error));
 
     fetch(`http://192.168.50.10:3001/api/tasks/${index}`, {
       method: "PUT",
@@ -31,8 +43,8 @@ const ShowAllTasks = (props: ITaskProps) => {
     })
       .then((res) => res.json())
       .then((data: ITask[]) => setTasks(data))
-      .catch((error) => console.log(error));
-    setReload && setReload(true);
+      .catch((error) => console.log(error))
+      .finally(() => setReload && setReload(true));
   };
 
   const onDelete = (name: string) => {
@@ -41,34 +53,8 @@ const ShowAllTasks = (props: ITaskProps) => {
     })
       .then((res) => res.json())
       .then((data: ITask[]) => setTasks(data))
-      .catch((error) => console.log(error));
-    // let newTasks = tasks;
-    // newTasks = newTasks.filter((task) => task.name !== name);
-    // transition.map((transition) => {
-    //   if (transition.to === name) {
-    //     newTasks.map((task) => {
-    //       if (task.isSelectedFrom && task.name === transition.from) {
-    //         task.isSelectedFrom = false;
-    //       }
-    //       return task;
-    //     });
-    //   } else if (transition.from === name) {
-    //     newTasks.map((task) => {
-    //       if (task.isSelectedTo && task.name === transition.from) {
-    //         task.isSelectedTo = false;
-    //       }
-    //       return task;
-    //     });
-    //   }
-    //   return newTasks;
-    // });
-    //   let newTransition = transition;
-    //   newTransition = newTransition.filter(
-    //     (transition) => !(transition.from === name || transition.to === name)
-    //   );
-    //   setTasks(newTasks);
-    //   setTransition && setTransition(newTransition);
-    //   setReload && setReload(true);
+      .catch((error) => console.log(error))
+      .finally(() => setReload && setReload(true));
   };
 
   return (
