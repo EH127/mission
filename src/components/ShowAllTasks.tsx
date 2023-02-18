@@ -16,7 +16,7 @@ const ShowAllTasks = (props: ITaskProps) => {
         .catch((error) => console.log(error))
         .finally(() => setReload && setReload(false));
     }
-  }, [reload]);
+  }, [reload, setReload]);
 
   const handleChange = (index: number) => {
     fetch("https://mission-backend.onrender.com/api/select", {
