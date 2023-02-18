@@ -24,7 +24,7 @@ const AddTransition = (props: ITransitionProps) => {
 
   const submit = (event: any) => {
     event.preventDefault();
-    fetch(`http://192.168.50.10:3001/api/transitions`, {
+    fetch(`https://mission-backend.onrender.com/api/transitions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

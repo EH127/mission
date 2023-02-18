@@ -16,7 +16,7 @@ const AddTask = (props: ITaskProps) => {
       return;
     }
 
-    fetch("http://192.168.50.10:3001/api/tasks", {
+    fetch("https://mission-backend.onrender.com/api/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

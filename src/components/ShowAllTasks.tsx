@@ -8,7 +8,7 @@ const ShowAllTasks = (props: ITaskProps) => {
 
   useEffect(() => {
     if (reload === true) {
-      fetch("http://192.168.50.10:3001/api/select")
+      fetch("https://mission-backend.onrender.com/api/select")
         .then((res) => res.json())
         .then((data) => {
           setSelectedValue(data.select);
@@ -19,7 +19,7 @@ const ShowAllTasks = (props: ITaskProps) => {
   }, [reload]);
 
   const handleChange = (index: number) => {
-    fetch("http://192.168.50.10:3001/api/select", {
+    fetch("https://mission-backend.onrender.com/api/select", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ const ShowAllTasks = (props: ITaskProps) => {
       .then((data) => setSelectedValue(data.select))
       .catch((error) => console.log(error));
 
-    fetch(`http://192.168.50.10:3001/api/tasks/${index}`, {
+    fetch(`https://mission-backend.onrender.com/api/tasks/${index}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const ShowAllTasks = (props: ITaskProps) => {
   };
 
   const onDelete = (name: string) => {
-    fetch(`http://192.168.50.10:3001/api/tasks/${name}`, {
+    fetch(`https://mission-backend.onrender.com/api/tasks/${name}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

@@ -5,7 +5,7 @@ const ShowAllTransitions = (props: ITransitionProps) => {
   const { transition, setTransition, setReload } = props;
 
   const onDelete = (name: string) => {
-    fetch(`http://192.168.50.10:3001/api/transitions/${name}`, {
+    fetch(`https://mission-backend.onrender.com/${name}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
