@@ -11,11 +11,11 @@ const App = () => {
 
   useEffect(() => {
     if (reload) {
-      fetch("http://192.168.50.10:3001/api/tasks")
+      fetch("https://mission-backend.onrender.com/api/tasks")
         .then((res) => res.json())
         .then((data) => setTasks(data));
 
-      fetch("http://192.168.50.10:3001/api/transitions")
+      fetch("https://mission-backend.onrender.com/transitions")
         .then((res) => res.json())
         .then((data) => setTransitions(data))
         .finally(() => setReload(false));
@@ -24,7 +24,7 @@ const App = () => {
 
   const onClick = (event: any) => {
     event.preventDefault();
-    fetch("http://192.168.50.10:3001/api/reset")
+    fetch("https://mission-backend.onrender.com/api/reset")
     setReload(true);
   };
 
