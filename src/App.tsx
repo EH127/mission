@@ -15,7 +15,7 @@ const App = () => {
         .then((res) => res.json())
         .then((data) => setTasks(data));
 
-      fetch("https://mission-backend.onrender.com/transitions")
+      fetch("https://mission-backend.onrender.com/api/transitions")
         .then((res) => res.json())
         .then((data) => setTransitions(data))
         .finally(() => setReload(false));
