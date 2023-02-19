@@ -4,9 +4,9 @@
 
 2. Open a command line and get into the folder where the project is located
 
-3. Run npm install to install all the dependencies
+3. Run 'npm install' to install all the dependencies
 
-4. After all the dependencies have been installed run npm run and go to http://localhost:3000 on your browser
+4. After all the dependencies have been installed run 'npm start' and go to http://localhost:3000 on your browser
 
 ## Deployment
 
