@@ -6,8 +6,8 @@
 
 3. Run '''npm install''' to install all the dependencies
 
-4. After all the dependencies have been installed run '''npm run''' and go to [http://localhost:3000] '''http://localhost:3000''' on your browser
+4. After all the dependencies have been installed run '''npm run''' and go to http://localhost:3000 on your browser
 
 ## Deployment
 
-The project is deployed using netlify with [https://methoda-mission.netlify.app/] '''https://methoda-mission.netlify.app/'''
+The project is deployed using netlify with https://methoda-mission.netlify.app/
