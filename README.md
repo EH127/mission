@@ -10,4 +10,4 @@
 
 ## Deployment
 
-The project is deployed using netlify with https://methoda-mission.netlify.app/
+The project is deployed using netlify and can be access by https://methoda-mission.netlify.app/
